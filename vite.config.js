@@ -6,5 +6,8 @@ import autoprefixer from 'autoprefixer';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [preact()],
-  base: '/' 
+  base: '/inmo-digital/',
+  build: {
+    outDir: 'dist' // usa 'dist' (por defecto de Vite)
+  } 
 })
