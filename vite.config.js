@@ -5,5 +5,6 @@ import autoprefixer from 'autoprefixer';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [preact()],  
+  plugins: [preact()],
+  base: '/' 
 })
