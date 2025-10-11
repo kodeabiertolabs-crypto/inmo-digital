@@ -30,6 +30,7 @@ export default function Contact() {
       });
   };*/
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -37,13 +38,13 @@ export default function Contact() {
     message: ''
   });
 
-  /*const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     alert('¡Gracias por tu interés! Te contactaremos pronto.');
     setFormData({ name: '', email: '', service: '', message: '' });
-  };*/
+  };
 
-  const handleSubmit = async (event) => {
+  /*const handleSubmit = async (event) => {
     event.preventDefault();
     
     try {
@@ -73,7 +74,7 @@ export default function Contact() {
       setIsError(true);
       console.error("Network error during form submission.", error);
     }
-  };
+  };*/
 
   const handleChange = (e) => {
     setFormData({
@@ -140,7 +141,7 @@ export default function Contact() {
             <form 
               name="contactoInmobiliario"  
               method="POST" 
-              data-netlify-honeypot="bot-field" 
+              //data-netlify-honeypot="bot-field" 
               data-netlify="true" 
               onSubmit={handleSubmit}
               class="space-y-6">
