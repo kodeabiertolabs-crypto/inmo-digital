@@ -8,6 +8,6 @@ const repoName = 'inmo-digital';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [preact()],
-  base: `/${repoName}/`,
+  //base: `/${repoName}/`,
    
 })
