@@ -63,7 +63,8 @@ export default function Contact() {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} class="space-y-6">
+            <form name="contactoInmobiliario" onSubmit={handleSubmit} data-netlify="true" class="space-y-6">
+              <input type="hidden" name="form-name" value="contactoInmobiliario" /> 
               <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Nombre Completo
