@@ -63,8 +63,11 @@ export default function Contact() {
               </div>
             </div>
 
-            <form name="contactoInmobiliario"  method="POST" data-netlify="true" class="space-y-6">
-              <input type="hidden" name="form-name" value="contactoInmobiliario" /> 
+            <form name="contacto"  method="POST" netlify-honeypot="bot-field" data-netlify="true" class="space-y-6">
+              <input type="hidden" name="form-name" value="contacto" />
+              <p class="hidden">
+                <label>No llenar este campo: <input name="bot-field" /></label>
+              </p>
               <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Nombre Completo
