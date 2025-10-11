@@ -38,10 +38,29 @@ export default function Contact() {
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert('¡Gracias por tu interés! Te contactaremos pronto.');
-    setFormData({ name: '', email: '', service: '', message: '' });
+    const form = e.currentTarget;
+    try {
+      const body = new URLSearchParams(new FormData(form)).toString();
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body
+      });
+      if (response.ok) {
+        setIsSubmitted(true);
+        setIsError(false);
+        setFormData({ name: '', email: '', service: '', message: '' });
+        form.reset();
+      } else {
+        setIsError(true);
+        console.error('Netlify form submission failed.', response);
+      }
+    } catch (error) {
+      setIsError(true);
+      console.error('Network error during form submission.', error);
+    }
   };
 
   /*const handleSubmit = async (event) => {
@@ -141,7 +160,7 @@ export default function Contact() {
             <form 
               name="contactoInmobiliario"  
               method="POST" 
-              //data-netlify-honeypot="bot-field" 
+              data-netlify-honeypot="bot-field" 
               data-netlify="true" 
               onSubmit={handleSubmit}
               class="space-y-6">

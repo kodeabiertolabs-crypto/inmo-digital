@@ -8,6 +8,24 @@
   </head>
   <body>
     <div id="app"></div>
+    <!-- Hidden static Netlify form for build-time detection -->
+    <form name="contactoInmobiliario" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" style="display:none">
+      <input type="hidden" name="form-name" value="contactoInmobiliario" />
+      <p class="hidden">
+        <label>Don’t fill this out: <input name="bot-field" /></label>
+      </p>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <select name="service">
+        <option value="web">Desarrollo Web</option>
+        <option value="seo">Optimización SEO</option>
+        <option value="chatbot">Chatbot</option>
+        <option value="social">Redes Sociales</option>
+        <option value="reviews">Gestión de Reseñas</option>
+        <option value="email">Email Marketing</option>
+      </select>
+      <textarea name="message"></textarea>
+    </form>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
