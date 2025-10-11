@@ -1,7 +1,28 @@
 import { useState } from 'preact/hooks';
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
+  const [status, setStatus] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    // Envía el formulario usando fetch
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString(),
+    })
+      .then(() => {
+        setStatus('success');
+        form.reset();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setStatus('error');
+      });
+  };
+  /*const [formData, setFormData] = useState({
     name: '',
     email: '',
     service: '',
@@ -19,7 +40,7 @@ export default function Contact() {
       ...formData,
       [e.target.name]: e.target.value
     });
-  };
+  };*/
 
   return (
     <section id="contacto" class="py-20 bg-white dark:bg-gray-900">
@@ -63,8 +84,27 @@ export default function Contact() {
               </div>
             </div>
 
-            <form name="contacto"  method="POST" netlify-honeypot="bot-field" data-netlify="true" class="space-y-6">
-              <input type="hidden" name="form-name" value="contacto" />
+            {status === 'success' && (
+              <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+                ¡Gracias! Tu mensaje ha sido enviado.
+              </div>
+            )}
+
+            {status === 'error' && (
+              <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+                Hubo un error al enviar el formulario. Inténtalo de nuevo.
+              </div>
+            )}
+
+            <form 
+              name="contact"  
+              method="POST" 
+              data-netlify-honeypot="bot-field" 
+              data-netlify="true" 
+              onSubmit={handleSubmit}
+              class="space-y-6">
+            
+              <input type="hidden" name="form-name" value="contact" />
               <p class="hidden">
                 <label>No llenar este campo: <input name="bot-field" /></label>
               </p>
@@ -76,8 +116,8 @@ export default function Contact() {
                   type="text"
                   id="name"
                   name="name"
-                  value={formData.name}
-                  onChange={handleChange}
+                  //value={formData.name}
+                  //onChange={handleChange}
                   required
                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
                   placeholder="Tu nombre"
@@ -92,8 +132,8 @@ export default function Contact() {
                   type="email"
                   id="email"
                   name="email"
-                  value={formData.email}
-                  onChange={handleChange}
+                  //value={formData.email}
+                  //onChange={handleChange}
                   required
                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
                   placeholder="tu@email.com"
@@ -107,8 +147,8 @@ export default function Contact() {
                 <select
                   id="service"
                   name="service"
-                  value={formData.service}
-                  onChange={handleChange}
+                  //value={formData.service}
+                  //onChange={handleChange}
                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
                 >
                   <option value="">Selecciona un servicio</option>
@@ -128,8 +168,8 @@ export default function Contact() {
                 <textarea
                   id="message"
                   name="message"
-                  value={formData.message}
-                  onChange={handleChange}
+                  //value={formData.message}
+                  //onChange={handleChange}
                   rows="4"
                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
                   placeholder="Cuéntanos sobre tu inmobiliaria..."
