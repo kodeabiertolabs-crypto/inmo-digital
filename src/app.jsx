@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks';
 import Header from './components/Header';
+//import FeaturedProperties from './components/FeaturedProperties';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import Benefits from './components/Benefits';
@@ -10,6 +11,7 @@ export function App() {
 		<div class="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
 			<Header />
 			<Hero />
+			{/* <FeaturedProperties /> */}
 			<Services />
 			<Benefits />
 			<Contact />
