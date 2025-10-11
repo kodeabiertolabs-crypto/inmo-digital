@@ -1,7 +1,14 @@
 import { useState } from 'preact/hooks';
 
+// Función auxiliar para codificar los datos del formulario al formato esperado por Netlify (URL-encoded)
+const encode = (data) => {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&");
+}
+
 export default function Contact() {
-  const [status, setStatus] = useState('');
+  /*const [status, setStatus] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,18 +28,51 @@ export default function Contact() {
         console.error('Error:', error);
         setStatus('error');
       });
-  };
-  /*const [formData, setFormData] = useState({
+  };*/
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
     service: '',
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  /*const handleSubmit = (e) => {
     e.preventDefault();
     alert('¡Gracias por tu interés! Te contactaremos pronto.');
     setFormData({ name: '', email: '', service: '', message: '' });
+  };*/
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    try {
+      // 🔑 CRÍTICO: Envío de datos codificados con el encabezado Content-Type correcto
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode(formData)
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setIsError(false);
+        // Limpia los campos
+        setFormData({ 
+            'form-name': 'contactoInmobiliario', 
+            name: '', 
+            email: '',
+            service: '',
+            message: '' 
+        }); 
+      } else {
+        setIsError(true);
+        console.error("Netlify form submission failed.", response);
+      }
+    } catch (error) {
+      setIsError(true);
+      console.error("Network error during form submission.", error);
+    }
   };
 
   const handleChange = (e) => {
@@ -40,7 +80,7 @@ export default function Contact() {
       ...formData,
       [e.target.name]: e.target.value
     });
-  };*/
+  };
 
   return (
     <section id="contacto" class="py-20 bg-white dark:bg-gray-900">
@@ -84,27 +124,28 @@ export default function Contact() {
               </div>
             </div>
 
-            {status === 'success' && (
-              <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
-                ¡Gracias! Tu mensaje ha sido enviado.
+            {/* Mensajes de feedback */}
+            {isSubmitted && (
+              <div className="p-4 mb-4 text-sm text-green-700 bg-green-100 dark:bg-green-800 dark:text-green-200 rounded-lg">
+                ¡Mensaje enviado con éxito! Te contactaremos a la brevedad.
               </div>
             )}
 
-            {status === 'error' && (
-              <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
-                Hubo un error al enviar el formulario. Inténtalo de nuevo.
+            {isError && (
+              <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 dark:bg-red-800 dark:text-red-200 rounded-lg">
+                Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.
               </div>
             )}
 
             <form 
-              name="contact"  
+              name="contactoInmobiliario"  
               method="POST" 
               data-netlify-honeypot="bot-field" 
               data-netlify="true" 
               onSubmit={handleSubmit}
               class="space-y-6">
             
-              <input type="hidden" name="form-name" value="contact" />
+              <input type="hidden" name="form-name" value="contactoInmobiliario" />
               <p class="hidden">
                 <label>No llenar este campo: <input name="bot-field" /></label>
               </p>
@@ -116,8 +157,8 @@ export default function Contact() {
                   type="text"
                   id="name"
                   name="name"
-                  //value={formData.name}
-                  //onChange={handleChange}
+                  value={formData.name}
+                  onChange={handleChange}
                   required
                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
                   placeholder="Tu nombre"
@@ -132,8 +173,8 @@ export default function Contact() {
                   type="email"
                   id="email"
                   name="email"
-                  //value={formData.email}
-                  //onChange={handleChange}
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
                   placeholder="tu@email.com"
@@ -147,8 +188,8 @@ export default function Contact() {
                 <select
                   id="service"
                   name="service"
-                  //value={formData.service}
-                  //onChange={handleChange}
+                  value={formData.service}
+                  onChange={handleChange}
                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
                 >
                   <option value="">Selecciona un servicio</option>
@@ -168,8 +209,8 @@ export default function Contact() {
                 <textarea
                   id="message"
                   name="message"
-                  //value={formData.message}
-                  //onChange={handleChange}
+                  value={formData.message}
+                  onChange={handleChange}
                   rows="4"
                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
                   placeholder="Cuéntanos sobre tu inmobiliaria..."
