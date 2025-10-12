@@ -18,7 +18,7 @@ export function App() {
 
 			<footer class="bg-gray-800 dark:bg-gray-900 text-white py-8">
 				<div class="container mx-auto px-4 text-center">
-					<p>&copy; 2025 Inmobiliaria Digital Services. Todos los derechos reservados.</p>
+					<p>&copy; 2025 KodeAbierto Labs - Inmobiliaria Digital Services. Todos los derechos reservados.</p>
 					<p class="text-gray-400 mt-2">Transformando inmobiliarias con soluciones digitales</p>
 				</div>
 			</footer>
