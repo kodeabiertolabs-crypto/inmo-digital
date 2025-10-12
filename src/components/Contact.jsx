@@ -29,36 +29,80 @@ export default function Contact() {
         setStatus('error');
       });
   };*/
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isError, setIsError] = useState(false);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState('');
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     service: '',
     message: ''
   });
+  const [touched, setTouched] = useState({}); // Nuevo: campos tocados
 
+  // Validación individual por campo
+  const validateField = (name, value) => {
+    console.log('Validando campo:', name, value);
+    switch (name) {
+      case 'name':
+        if (!value.trim()) return 'El nombre es requerido';
+        if (value.trim().length < 2) return 'El nombre debe tener al menos 2 caracteres';
+        return '';
+      
+      case 'email':
+        if (!value.trim()) return 'El email es requerido';
+        if (!/\S+@\S+\.\S+/.test(value)) return 'Email inválido';
+        return '';
+      
+      case 'message':
+        if (!value.trim()) return 'El mensaje es requerido';
+        if (value.trim().length < 10) return 'El mensaje debe tener al menos 10 caracteres';
+        return '';
+      
+      default:
+        return '';
+    }
+  };
+
+  // Validación completa (para submit)
   const validateForm = () => {
     const newErrors = {};
-
-    if (!formData.name.trim()) newErrors.name = 'El nombre es requerido';
-    if (!formData.email.trim()) {
-      newErrors.email = 'El email es requerido';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email inválido';
-    }
-    if (!formData.message.trim()) newErrors.message = 'El mensaje es requerido';
-
-    setIsError(newErrors);
+    
+    Object.keys(formData).forEach(key => {
+      if (key !== 'service') { // service no es requerido
+        const error = validateField(key, formData[key]);
+        if (error) newErrors[key] = error;
+      }
+    });
+    
+    setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validateForm()) return;
-
     const form = e.currentTarget;
+
+     // Marcar todos los campos como tocados al intentar enviar
+     const allTouched = {};
+     Object.keys(formData).forEach(key => {
+       allTouched[key] = true;
+     });
+     setTouched(allTouched);
+
+    // Validación final antes de enviar
+    if (!validateForm()) {
+      // Scroll al primer error
+      const firstError = document.querySelector('[class*="border-red-500"]');
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }    
+
+    setIsSubmitting(true);
+
     try {
       const body = new URLSearchParams(new FormData(form)).toString();
       const response = await fetch('/', {
@@ -67,67 +111,93 @@ export default function Contact() {
         body
       });
       if (response.ok) {
-        setIsSubmitted(true);
-        setIsError(false);
+        setSubmitStatus('success');
         setFormData({ name: '', email: '', service: '', message: '' });
+        setErrors({});
+        setTouched({});
         form.reset();
+        // Redirección a página de gracias
+        window.location.href = '/gracias.html';
       } else {
-        setIsError(true);
+        setSubmitStatus('error');
         console.error('Netlify form submission failed.', response);
       }
     } catch (error) {
-      setIsError(true);
+      //setErrors(true);
+      setSubmitStatus('error');
       console.error('Network error during form submission.', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  /*const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
     
-    try {
-      // 🔑 CRÍTICO: Envío de datos codificados con el encabezado Content-Type correcto
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode(formData)
-      });
-
-      if (response.ok) {
-        setIsSubmitted(true);
-        setIsError(false);
-        // Limpia los campos
-        setFormData({ 
-            'form-name': 'contactoInmobiliario', 
-            name: '', 
-            email: '',
-            service: '',
-            message: '' 
-        }); 
-      } else {
-        setIsError(true);
-        console.error("Netlify form submission failed.", response);
-      }
-    } catch (error) {
-      setIsError(true);
-      console.error("Network error during form submission.", error);
-    }
-  };*/
+    // Marcar campo como "tocado"
+    setTouched(prev => ({
+      ...prev,
+      [name]: true
+    }));
+    
+    // Validar campo individual
+    const error = validateField(name, value);
+    setErrors(prev => ({
+      ...prev,
+      [name]: error
+    }));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log('Cambio:', name, value);
     setFormData({
       ...formData,
       [name]: value
     });
 
-    // Limpiar error cuando el usuario empiece a escribir
-    if (isError[name]) {
-      setIsError(prev => ({
+    // Marcar como tocado en el primer cambio
+    if (!touched[name]) {
+      setTouched(prev => ({
         ...prev,
-        [name]: ''
+        [name]: true
       }));
     }
+
+    // Validación en tiempo real SIEMPRE al escribir
+    const error = validateField(name, value);
+    console.log('Error:', error);
+    setErrors(prev => ({
+      ...prev,
+      [name]: error
+    }));
   };
+
+  // Estado derivado para controlar el estado del botón
+  const requiredFilled = (
+    formData.name.trim() !== '' &&
+    formData.email.trim() !== '' &&
+    formData.message.trim() !== ''
+  );
+  const formatValid = (
+    validateField('name', formData.name) === '' &&
+    validateField('email', formData.email) === '' &&
+    validateField('message', formData.message) === ''
+  );
+  // Errores calculados en caliente para que el botón responda en tiempo real
+  const hasErrors = [
+    validateField('name', formData.name),
+    validateField('email', formData.email),
+    validateField('message', formData.message)
+  ].some(Boolean);
+  const isDisabled = isSubmitting || !requiredFilled || !formatValid || hasErrors;
+
+  // Contador de caracteres del mensaje
+  const messageLength = formData.message.length;
+  const minMessage = 10;
+  const messageCounterClass = messageLength < minMessage
+    ? 'text-red-600 dark:text-red-400'
+    : 'text-gray-500 dark:text-gray-400';
 
   return (
     <section id="contacto" class="py-20 bg-white dark:bg-gray-900">
@@ -169,20 +239,7 @@ export default function Contact() {
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Mensajes de feedback */}
-            {isSubmitted && (
-              <div className="p-4 mb-4 text-sm text-green-700 bg-green-100 dark:bg-green-800 dark:text-green-200 rounded-lg">
-                ¡Mensaje enviado con éxito! Te contactaremos a la brevedad.
-              </div>
-            )}
-
-            {isError && (
-              <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 dark:bg-red-800 dark:text-red-200 rounded-lg">
-                Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.
-              </div>
-            )}
+            </div>            
 
             <form 
               name="contactoInmobiliario"  
@@ -205,13 +262,21 @@ export default function Contact() {
                   id="name"
                   name="name"
                   value={formData.name}
-                  onChange={handleChange}
+                  onInput={handleChange}
+                  onBlur={handleBlur}
                   required
-                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
+                  class={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                    errors.name && touched.name
+                      ? 'border-red-500 focus:ring-red-500 dark:border-red-500'
+                      : 'border-gray-300 dark:border-gray-600 focus:ring-primary-500 dark:bg-gray-700 dark:text-white'
+                  }`}
                   placeholder="Tu nombre"
                 />
-                {isError.name && (
-                  <p class="mt-1 text-sm text-red-600 dark:text-red-400">{isError.name}</p>
+                {errors.name && touched.name && (
+                  <p class="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center">
+                    <span class="mr-1">⚠️</span>
+                    {errors.name}
+                  </p>
                 )}
               </div>
 
@@ -224,11 +289,22 @@ export default function Contact() {
                   id="email"
                   name="email"
                   value={formData.email}
-                  onChange={handleChange}
+                  onInput={handleChange}
+                  onBlur={handleBlur}
                   required
-                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
+                  class={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                    errors.email && touched.email
+                      ? 'border-red-500 focus:ring-red-500 dark:border-red-500'
+                      : 'border-gray-300 dark:border-gray-600 focus:ring-primary-500 dark:bg-gray-700 dark:text-white'
+                  }`}
                   placeholder="tu@email.com"
                 />
+                {errors.email && touched.email && (
+                  <p class="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center">
+                    <span class="mr-1">⚠️</span>
+                    {errors.email}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -260,18 +336,39 @@ export default function Contact() {
                   id="message"
                   name="message"
                   value={formData.message}
-                  onChange={handleChange}
+                  onInput={handleChange}
+                  onBlur={handleBlur}
                   rows="4"
-                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
+                  class={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                    errors.message && touched.message
+                      ? 'border-red-500 focus:ring-red-500 dark:border-red-500'
+                      : 'border-gray-300 dark:border-gray-600 focus:ring-primary-500 dark:bg-gray-700 dark:text-white'
+                  }`}
                   placeholder="Cuéntanos sobre tu inmobiliaria..."
                 ></textarea>
+                <div class="mt-1 text-xs flex justify-end">
+                  <span class={`${messageCounterClass}`} aria-live="polite">
+                    {messageLength}/{minMessage} mínimo
+                  </span>
+                </div>
+                {errors.message && touched.message && (
+                  <p class="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center">
+                    <span class="mr-1">⚠️</span>
+                    {errors.message}
+                  </p>
+                )}
               </div>
 
               <button
                 type="submit"
-                class="w-full btn-primary text-lg"
+                disabled={isDisabled}
+                class={`w-full py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-300 ${
+                  isDisabled 
+                    ? 'bg-gray-400 cursor-not-allowed text-gray-200' 
+                    : 'bg-blue-600 hover:bg-blue-700 text-white transform hover:scale-105'
+                }`}
               >
-                Solicitar Consultoría Gratuita
+                {isSubmitting ? 'Enviando...' : 'Solicitar Consultoría Gratuita'}
               </button>
             </form>
           </div>
