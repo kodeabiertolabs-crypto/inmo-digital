@@ -38,8 +38,26 @@ export default function Contact() {
     message: ''
   });
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = 'El nombre es requerido';
+    if (!formData.email.trim()) {
+      newErrors.email = 'El email es requerido';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email inválido';
+    }
+    if (!formData.message.trim()) newErrors.message = 'El mensaje es requerido';
+
+    setIsError(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
+
     const form = e.currentTarget;
     try {
       const body = new URLSearchParams(new FormData(form)).toString();
@@ -96,10 +114,19 @@ export default function Contact() {
   };*/
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
+
+    // Limpiar error cuando el usuario empiece a escribir
+    if (isError[name]) {
+      setIsError(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
   };
 
   return (
@@ -183,6 +210,9 @@ export default function Contact() {
                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
                   placeholder="Tu nombre"
                 />
+                {isError.name && (
+                  <p class="mt-1 text-sm text-red-600 dark:text-red-400">{isError.name}</p>
+                )}
               </div>
 
               <div>
