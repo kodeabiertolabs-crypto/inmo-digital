@@ -7,28 +7,7 @@ const encode = (data) => {
     .join("&");
 }
 
-export default function Contact() {
-  /*const [status, setStatus] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-
-    // Envía el formulario usando fetch
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(form)).toString(),
-    })
-      .then(() => {
-        setStatus('success');
-        form.reset();
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        setStatus('error');
-      });
-  };*/
+export default function Contact() {  
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState('');
@@ -43,7 +22,6 @@ export default function Contact() {
 
   // Validación individual por campo
   const validateField = (name, value) => {
-    console.log('Validando campo:', name, value);
     switch (name) {
       case 'name':
         if (!value.trim()) return 'El nombre es requerido';
@@ -150,7 +128,6 @@ export default function Contact() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log('Cambio:', name, value);
     setFormData({
       ...formData,
       [name]: value
@@ -166,7 +143,6 @@ export default function Contact() {
 
     // Validación en tiempo real SIEMPRE al escribir
     const error = validateField(name, value);
-    console.log('Error:', error);
     setErrors(prev => ({
       ...prev,
       [name]: error
