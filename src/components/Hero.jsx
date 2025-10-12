@@ -1,7 +1,16 @@
 export default function Hero() {
 	return (
-	  <section class="bg-gradient-to-br from-primary-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 py-20">
-		<div class="container mx-auto px-4 text-center">
+	  <section
+		class="relative py-20 bg-cover bg-center bg-no-repeat"
+		style={{
+		  backgroundImage:
+			"url('https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1920&auto=format&fit=crop')",
+		}}
+	  >
+		{/* Overlay para mejorar legibilidad del texto */}
+		<div class="absolute inset-0 bg-gradient-to-br from-primary-50/80 to-blue-100/60 dark:from-gray-900/80 dark:to-gray-800/80" />
+
+		<div class="relative container mx-auto px-4 text-center">
 		  <h1 class="text-5xl md:text-6xl font-bold text-gray-800 dark:text-white mb-6">
 			Transforma tu inmobiliaria
 			<span class="block text-primary-600 dark:text-primary-400">con soluciones digitales</span>
