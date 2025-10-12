@@ -207,7 +207,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p class="font-semibold text-gray-800 dark:text-white">Email</p>
-                    <p class="text-gray-600 dark:text-gray-300">info@inmobiliariadigital.com</p>
+                    <p class="text-gray-600 dark:text-gray-300">kodeabierto.labs+inmo-digital@gmail.com</p>
                   </div>
                 </div>
 
@@ -216,8 +216,8 @@ export default function Contact() {
                     <span class="text-primary-600 dark:text-primary-400">📱</span>
                   </div>
                   <div>
-                    <p class="font-semibold text-gray-800 dark:text-white">WhatsApp</p>
-                    <p class="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
+                    <p class="font-semibold text-gray-800 dark:text-white">Tel.</p>
+                    <p class="text-gray-600 dark:text-gray-300">(11) 6862-6990</p>
                   </div>
                 </div>
               </div>
