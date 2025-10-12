@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
 
 // Función auxiliar para codificar los datos del formulario al formato esperado por Netlify (URL-encoded)
 const encode = (data) => {
@@ -19,6 +19,14 @@ export default function Contact() {
     message: ''
   });
   const [touched, setTouched] = useState({}); // Nuevo: campos tocados
+
+  // Ocultar mensaje de éxito automáticamente después de 5 segundos
+  useEffect(() => {
+    if (submitStatus === 'success') {
+      const timer = setTimeout(() => setSubmitStatus(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [submitStatus]);
 
   // Validación individual por campo
   const validateField = (name, value) => {
