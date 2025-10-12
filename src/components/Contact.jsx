@@ -94,8 +94,6 @@ export default function Contact() {
         setErrors({});
         setTouched({});
         form.reset();
-        // Redirección a página de gracias
-        window.location.href = '/gracias.html';
       } else {
         setSubmitStatus('error');
         console.error('Netlify form submission failed.', response);
@@ -215,7 +213,19 @@ export default function Contact() {
                   </div>
                 </div>
               </div>
-            </div>            
+            </div>
+
+            {/* Mensajes de feedback */}
+            {submitStatus === 'success' && (
+              <div className="p-4 mb-4 text-sm text-green-700 bg-green-100 dark:bg-green-800 dark:text-green-200 rounded-lg">
+                ¡Mensaje enviado con éxito! Te contactaremos a la brevedad.
+              </div>
+            )}
+            {submitStatus === 'error' && (
+              <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 dark:bg-red-800 dark:text-red-200 rounded-lg">
+                Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo.
+              </div>
+            )}
 
             <form 
               name="contactoInmobiliario"  
