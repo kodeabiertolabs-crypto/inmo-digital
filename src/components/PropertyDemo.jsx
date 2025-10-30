@@ -3,7 +3,7 @@ import { useState } from 'preact/hooks';
 const demoProperties = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1600585154340-9633f73f16d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+    image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=1920&auto=format&fit=crop',
     title: 'Departamento en Puerto Madero',
     location: 'Puerto Madero, CABA',
     price: 'ARS 450.000.000',
@@ -29,7 +29,7 @@ const demoProperties = [
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=1920&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
     title: 'PH en Palermo',
     location: 'Palermo, CABA',
     price: 'ARS 310.000.000',
@@ -42,7 +42,7 @@ const demoProperties = [
   },
   {
     id: 4,
-    image: 'https://source.unsplash.com/1600x900/?rosario,centro,argentina',
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
     title: 'Loft en Rosario Centro',
     location: 'Centro, Rosario',
     price: 'ARS 180.000.000',

@@ -27,7 +27,7 @@ const benefits = [
 		<div class="container mx-auto px-4">
 		  <div class="text-center mb-16">
 			<h2 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">
-			  Resultados Comprobados
+			  Resultados comprobados
 			</h2>
 			<p class="text-xl text-gray-600 dark:text-gray-300">
 			  Métricas reales de inmobiliarias que han transformado su negocio

@@ -187,7 +187,7 @@ export default function Contact() {
         <div class="max-w-4xl mx-auto">
           <div class="text-center mb-16">
             <h2 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">
-              Comienza Tu Transformación Digital
+              Comienza tu transformación digital
             </h2>
             <p class="text-xl text-gray-600 dark:text-gray-300">
               Contáctanos para una consultoría gratuita
@@ -197,7 +197,7 @@ export default function Contact() {
           <div class="grid md:grid-cols-2 gap-12">
             <div>
               <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-                Información de Contacto
+                Información de contacto
               </h3>
               
               <div class="space-y-4">
