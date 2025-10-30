@@ -313,12 +313,12 @@ export default function Contact() {
                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
                 >
                   <option value="">Selecciona un servicio</option>
-                  <option value="web">Desarrollo Web</option>
-                  <option value="seo">Optimización SEO</option>
-                  <option value="chatbot">Chatbot</option>
-                  <option value="social">Redes Sociales</option>
-                  <option value="reviews">Gestión de Reseñas</option>
-                  <option value="email">Email Marketing</option>
+                  <option value="web">Plataforma Web Optimizada</option>
+                  <option value="seo">Asistentes Inteligentes 24/7 (IA)</option>
+                  <option value="chatbot">Marketing de Crecimiento Acelerado</option>
+                  <option value="social">Gestión de Redes Sociales</option>
+                  <option value="reviews">Gestión de Reseñas y Reputación</option>
+                  <option value="email">Email Marketing Automatizado</option>
                 </select>
               </div>
 
@@ -333,7 +333,7 @@ export default function Contact() {
                   onInput={handleChange}
                   onBlur={handleBlur}
                   rows="4"
-                  class={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                  class={`w-full px-4 py-3 border rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:border-transparent transition-colors ${
                     errors.message && touched.message
                       ? 'border-red-500 focus:ring-red-500 dark:border-red-500'
                       : 'border-gray-300 dark:border-gray-600 focus:ring-primary-500 dark:bg-gray-700 dark:text-white'
