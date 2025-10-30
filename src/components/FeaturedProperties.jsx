@@ -1,48 +1,48 @@
 const properties = [
-	{
-	  id: 1,
-	  image: 'https://images.unsplash.com/photo-1600585154340-9633f73f16d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-	  title: 'Casa Moderna en Bosque',
-	  location: 'North Beverly Park, Los Angeles',
-	  price: '$2,500,000',
-	  beds: 5,
-	  baths: 4,
-	  sqft: 4200,
-	  featured: true
-	},
-	{
-	  id: 2,
-	  image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80',
-	  title: 'Penthouse con Vista al Mar',
-	  location: 'Miami Beach, Florida',
-	  price: '$1,800,000',
-	  beds: 3,
-	  baths: 3,
-	  sqft: 2800,
-	  featured: true
-	},
-	{
-	  id: 3,
-	  image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-	  title: 'Loft Industrial',
-	  location: 'Williamsburg, Brooklyn',
-	  price: '$950,000',
-	  beds: 2,
-	  baths: 2,
-	  sqft: 1800,
-	  featured: false
-	},
-	{
-	  id: 4,
-	  image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2092&q=80',
-	  title: 'Villa Mediterránea',
-	  location: 'Malibu, California',
-	  price: '$3,200,000',
-	  beds: 6,
-	  baths: 5,
-	  sqft: 5500,
-	  featured: true
-	}
+    {
+      id: 1,
+      image: 'https://source.unsplash.com/1600x900/?puerto-madero,buenos-aires',
+      title: 'Departamento en Puerto Madero',
+      location: 'Puerto Madero, CABA',
+      price: 'ARS 450.000.000',
+      beds: 2,
+      baths: 2,
+      sqm: 120,
+      featured: true
+    },
+    {
+      id: 2,
+      image: 'https://images.unsplash.com/photo-1560958089-b8a1929cac99?q=80&w=1920&auto=format&fit=crop',
+      title: 'Casa en Nordelta',
+      location: 'Nordelta, Tigre',
+      price: 'ARS 720.000.000',
+      beds: 4,
+      baths: 4,
+      sqm: 320,
+      featured: true
+    },
+    {
+      id: 3,
+      image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=1920&auto=format&fit=crop',
+      title: 'PH en Palermo',
+      location: 'Palermo, CABA',
+      price: 'ARS 310.000.000',
+      beds: 3,
+      baths: 2,
+      sqm: 160,
+      featured: false
+    },
+    {
+      id: 4,
+      image: 'https://source.unsplash.com/1600x900/?rosario,centro,argentina',
+      title: 'Loft en Rosario Centro',
+      location: 'Centro, Rosario',
+      price: 'ARS 180.000.000',
+      beds: 1,
+      baths: 1,
+      sqm: 75,
+      featured: true
+    }
   ];
   
   export default function FeaturedProperties() {
@@ -68,11 +68,11 @@ const properties = [
 					class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
 				  />
 				  {/* Badge Destacada en la imagen principal */}
-				  {selectedProperty.featured && (
-                  <div class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    Destacada
-                  </div>
-                )}
+				  {property.featured && (
+                    <div class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                      Destacada
+                    </div>
+                  )}
 				  <div class="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow-lg">
 					<span class="text-lg">❤️</span>
 				  </div>
@@ -102,7 +102,7 @@ const properties = [
 					</div>
 					<div class="flex items-center">
 					  <span class="mr-1">📐</span>
-					  {property.sqft} ft²
+					  {property.sqm} m²
 					</div>
 				  </div>
 				  

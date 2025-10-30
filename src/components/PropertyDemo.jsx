@@ -4,54 +4,54 @@ const demoProperties = [
   {
     id: 1,
     image: 'https://images.unsplash.com/photo-1600585154340-9633f73f16d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-    title: 'Casa Moderna en Bosque',
-    location: 'North Beverly Park, Los Angeles',
-    price: '$2,500,000',
-    beds: 5,
-    baths: 4,
-    sqft: 4200,
-    description: 'Hermosa casa moderna con amplios espacios, acabados de lujo y ubicación privilegiada.',
-    features: ['Piscina infinita', 'Cocina gourmet', 'Home theater', 'Gimnasio privado'],
-    featured: false // ← AGREGADO
+    title: 'Departamento en Puerto Madero',
+    location: 'Puerto Madero, CABA',
+    price: 'ARS 450.000.000',
+    beds: 2,
+    baths: 2,
+    sqm: 120,
+    description: 'Departamento de categoría con amenities y vista a diques. Excelente ubicación.',
+    features: ['Piscina climatizada', 'SUM', 'Gimnasio', 'Seguridad 24 hs'],
+    featured: false
   },
   {
     id: 2,
     image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80',
-    title: 'Penthouse con Vista al Mar',
-    location: 'Miami Beach, Florida',
-    price: '$1,800,000',
-    beds: 3,
-    baths: 3,
-    sqft: 2800,
-    description: 'Espectacular penthouse con vistas panorámicas al océano y acabados de primera calidad.',
-    features: ['Terraza privada', 'Vista al mar', 'Concierge 24/7', 'Estacionamiento privado'],
-    featured: true // ← AGREGADO
+    title: 'Casa en Nordelta',
+    location: 'Nordelta, Tigre',
+    price: 'ARS 720.000.000',
+    beds: 4,
+    baths: 4,
+    sqm: 320,
+    description: 'Casa con jardín, pileta y cochera doble en barrio cerrado con seguridad.',
+    features: ['Pileta', 'Parrilla', 'Cocina equipada', 'Playroom'],
+    featured: true
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-    title: 'Loft Industrial',
-    location: 'Williamsburg, Brooklyn',
-    price: '$950,000',
-    beds: 2,
+    image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=1920&auto=format&fit=crop',
+    title: 'PH en Palermo',
+    location: 'Palermo, CABA',
+    price: 'ARS 310.000.000',
+    beds: 3,
     baths: 2,
-    sqft: 1800,
-    description: 'Loft estilo industrial con espacios abiertos, techos altos y mucha personalidad.',
-    features: ['Techos de 4m', 'Vigas expuestas', 'Ubicación céntrica', 'Cocina abierta'],
-    featured: false // ← AGREGADO
+    sqm: 160,
+    description: 'PH reciclado con terraza propia, muy luminoso y bien conectado.',
+    features: ['Terraza', 'Lavadero', 'Balcón', 'Patio'],
+    featured: false
   },
   {
-	id: 4,
-	image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2092&q=80',
-	title: 'Villa Mediterránea',
-	location: 'Malibu, California',
-	price: '$3,200,000',
-	beds: 6,
-	baths: 5,
-	sqft: 5500,
-	description: 'Villa Mediterránea con vistas panorámicas al océano y acabados de primera calidad.',
-	features: ['Terraza privada', 'Vista al mar', 'Concierge 24/7', 'Estacionamiento privado'],
-	featured: true
+    id: 4,
+    image: 'https://source.unsplash.com/1600x900/?rosario,centro,argentina',
+    title: 'Loft en Rosario Centro',
+    location: 'Centro, Rosario',
+    price: 'ARS 180.000.000',
+    beds: 1,
+    baths: 1,
+    sqm: 75,
+    description: 'Loft moderno en zona céntrica, ideal para renta o primera vivienda.',
+    features: ['Cocina integrada', 'Bajas expensas', 'Cercanía a transporte', 'Baulera'],
+    featured: true
   }
 ];
 
@@ -178,8 +178,8 @@ export default function PropertyDemo({ service, onClose }) {
                     </div>
                     <div class="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                       <div class="text-2xl">📐</div>
-                      <div class="font-semibold text-gray-800 dark:text-white">{selectedProperty.sqft}</div>
-                      <div class="text-sm text-gray-600 dark:text-gray-400">ft²</div>
+                      <div class="font-semibold text-gray-800 dark:text-white">{selectedProperty.sqm}</div>
+                      <div class="text-sm text-gray-600 dark:text-gray-400">m²</div>
                     </div>
                   </div>
                 </div>
