@@ -271,7 +271,7 @@ export default function Services() {
 						La fórmula para el crecimiento de tu inmobiliaria
 					</p>
 					<p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-						Combinamos tecnología de punta con experiencia en el mercado de Buenos Aires para asegurar un flujo constante de leads calificados.
+						Combinamos tecnología de punta con experiencia en el mercado de Argentina para asegurar un flujo constante de leads calificados.
 					</p>					
 				</div>
 
